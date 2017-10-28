@@ -76,8 +76,6 @@
                     </view>
                     <connections>
                         <outlet property="label" destination="x72-4x-f2z" id="aLb-w9-2Oy"/>
-                        <outlet property="sendLeft" destination="6Qa-w2-imY" id="Obo-o9-jeH"/>
-                        <outlet property="sendRight" destination="fOW-mV-Q7Z" id="Otz-Ln-Mzj"/>
                         <outlet property="textFieldLeft" destination="A5t-AG-yAo" id="RqD-VL-Bpi"/>
                         <outlet property="textFieldRight" destination="DjT-fL-rtv" id="jhg-QZ-ekq"/>
                     </connections>

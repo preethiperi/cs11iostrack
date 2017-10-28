@@ -28,29 +28,34 @@ class ViewController: UIViewController {
     //MARK: Actions
     
     @IBAction func sendLeft(_ sender: UIButton) {
-        let leftText = textFieldLeft.text!;
-        let newText = label.text! + leftText;
-        label.text = newText;
+        let leftText = textFieldLeft.text!
+        let newText = label.text! + leftText.lowercased()
+        label.text = newText
     }
     
     @IBAction func sendRight(_ sender: UIButton) {
-        let rightText = textFieldRight.text!;
-        let newText = label.text! + rightText;
-        label.text = newText;
+        let rightText = textFieldRight.text!
+        let newText = label.text! + rightText.uppercased()
+        label.text = newText
     }
     @IBAction func clearLabel(_ sender: UIButton) {
-        label.text = "";
+        label.text = ""
     }
-    
-    /*
+
     @IBAction func clearVowels(_ sender: UIButton) {
-        for char in label.text! {
-            if (char == "a" || char == "e" || char == "i"
-                            || char == "o" || char == "u") {
-                let char = "";
+        let char_array = Array(label.text!)
+        var output_text = ""
+        for char in char_array {
+            let lower_char = Character(String(char).lowercased())
+            if !(lower_char == "a" ||
+                lower_char == "e" ||
+                lower_char == "i" ||
+                lower_char == "o" ||
+                lower_char == "u") {
+                output_text += String(char)
             }
         }
+        label.text = output_text
     }
- */
 }
 
