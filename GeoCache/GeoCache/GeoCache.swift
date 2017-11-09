@@ -49,9 +49,9 @@ struct GeoCache {
     var description: String {
         get {
             return "Title: " + self.title + "\r"
-            + "Details: " + self.details
-            + "Creator: " + self.creator
-            + "Reward: " + self.reward
+            + "Details: " + self.details + "\r"
+            + "Creator: " + self.creator + "\r"
+            + "Reward: " + self.reward + "\r"
         }
     }
     
@@ -70,6 +70,10 @@ func loadCachesFromDefaults() -> [GeoCache] {
 
 func saveCachesToDefaults(_ caches: [GeoCache]) {
     let defaults = UserDefaults.standard
-    defaults.set(caches, forKey: "GeoCacheArray")
+    var dict_array = [[String: String]]()
+    for gc in caches {
+        dict_array.append(gc.dictionary)
+    }
+    defaults.set(dict_array, forKey: "GeoCacheArray")
     defaults.synchronize()
 }

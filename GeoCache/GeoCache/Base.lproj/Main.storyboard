@@ -87,7 +87,6 @@
                                 <state key="normal" title="Next"/>
                                 <connections>
                                     <action selector="nextCache:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kDN-gl-79C"/>
-                                    <action selector="nextGeoCache:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IS6-G6-NwU"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Add your geocaches to this lovely text field!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PxR-Z2-xSM">
@@ -102,24 +101,15 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="Creator" destination="mTq-V4-wjK" id="bTF-bU-Fsf"/>
-                        <outlet property="Details" destination="fAZ-OS-gHi" id="EdT-ic-BZE"/>
-                        <outlet property="Reward" destination="tw5-GC-c8T" id="tqf-Jt-qu7"/>
-                        <outlet property="Title" destination="Dyv-Cv-0xy" id="0TG-9V-AoN"/>
                         <outlet property="addButton" destination="msR-2F-vTF" id="mUW-sm-ySR"/>
-                        <outlet property="addButtonField" destination="msR-2F-vTF" id="97m-hf-buO"/>
-                        <outlet property="creator" destination="mTq-V4-wjK" id="Rrp-m6-s1b"/>
                         <outlet property="creatorField" destination="Od7-uW-UfC" id="RNT-xh-4lV"/>
                         <outlet property="creatorLabel" destination="mTq-V4-wjK" id="zYk-u4-5Dc"/>
-                        <outlet property="details" destination="fAZ-OS-gHi" id="0RJ-g8-qEG"/>
                         <outlet property="detailsField" destination="La2-OU-BwH" id="5I0-HQ-J5H"/>
                         <outlet property="detailsLabel" destination="fAZ-OS-gHi" id="iAv-lr-JAq"/>
                         <outlet property="nextButton" destination="BeJ-pL-A7I" id="Xly-0p-tAr"/>
-                        <outlet property="reward" destination="tw5-GC-c8T" id="Xwj-Z4-icB"/>
                         <outlet property="rewardField" destination="cgD-pm-GV8" id="6rn-a8-MK6"/>
                         <outlet property="rewardLabel" destination="tw5-GC-c8T" id="qpa-xa-tHD"/>
                         <outlet property="textField" destination="PxR-Z2-xSM" id="POh-bR-76Y"/>
-                        <outlet property="title" destination="Dyv-Cv-0xy" id="apC-Cf-eMH"/>
                         <outlet property="titleField" destination="pY0-dN-9b3" id="jVj-VC-vPm"/>
                         <outlet property="titleLabel" destination="Dyv-Cv-0xy" id="Jbk-aB-g8f"/>
                     </connections>
