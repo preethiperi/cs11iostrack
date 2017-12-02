@@ -67,8 +67,8 @@ class TableViewController: UITableViewController {
                 cacheArray.append(controller.cache!)
                 let ip = IndexPath(row: cacheArray.count, section: 0)
                 tableView.insertRows(at: [ip], with: UITableViewRowAnimation.fade)
-                saveCachesToDefaults(cacheArray)
-                // sendCacheToServer(controller.cache!)
+                // saveCachesToDefaults(cacheArray)
+                sendCacheToServer(controller.cache!)
             }
         }
     }
