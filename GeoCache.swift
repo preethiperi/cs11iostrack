@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
 struct GeoCache {
+    let id: Int
     let title: String
     let details: String
     let creator: String
     let reward: String
-    let id: Int
+    var image: UIImage?
     
     init?(fromDictionary dict: [String: Any]) {
         guard let title = dict["title"] else {
@@ -39,6 +41,8 @@ struct GeoCache {
             return nil
         }
         self.id = id as! Int
+        
+        self.image = nil
     }
     
     var dictionary: [String: String] {
@@ -94,6 +98,12 @@ func sendCacheToServer(_ cache: GeoCache) {
     request.httpMethod = "POST"
     let data = try? JSONSerialization.data(withJSONObject: cache.dictionary)
     request.httpBody = data
+    
+    
+    let response = try? JSONSerialization.jsonObject(with: data!, options: []) as! [String]
+    if (response![0] == "Success" && cache.image != nil) {
+        sendImage(id: cache.id, image: cache.image!)
+    }
 }
 
 func loadCachesFromServer(onComplete: @escaping ([GeoCache]) -> ()) {
@@ -114,11 +124,43 @@ func loadCachesFromServer(onComplete: @escaping ([GeoCache]) -> ()) {
                 for dict in cacheArray {
                     gcArray.append(GeoCache(fromDictionary: dict)!)
                 }
+                onComplete(gcArray)
             } catch let error as NSError {
                 print(error)
             }
         }
     })
     task.resume()
-    onComplete(gcArray)
+}
+
+func sendImage(id: Int, image: UIImage) {
+    var request = URLRequest(url: URL(string: "http://localhost:5000/addPicture?id=\(id)")!)
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    let data = UIImageJPEGRepresentation(image, 0.25)
+    request.httpBody = data
+}
+
+func pullImageFromServer(id: Int, number: Int, onComplete: @escaping (UIImage) -> ()) {
+    var image = UIImage()
+    
+    var request = URLRequest(url: URL(string: "http://localhost:5000/getImage")!)
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "GET"
+    
+    let task = URLSession.shared.dataTask(with: request, completionHandler: {
+        data, response, error in
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        } else {
+            do {
+                image = UIImage(data: data!)!
+                onComplete(image)
+            } catch let error as NSError {
+                print(error)
+            }
+        }
+    })
+    task.resume()
 }

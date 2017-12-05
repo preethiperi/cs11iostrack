@@ -8,14 +8,16 @@
 
 import UIKit
 
-class NewCacheViewController: UIViewController {
+class NewCacheViewController: UIViewController, UIImagePickerControllerDelegate {
     
     var dict = [String: String]()
     var cache : GeoCache? = nil
+    var picker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        picker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +51,29 @@ class NewCacheViewController: UIViewController {
         dict["creator"] = creatorField.text!
         dict["reward"] = rewardField.text!
         cache = GeoCache(fromDictionary: dict)
+        cache!.image = imageView?.image
+    }
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBAction func cameraButton(_ sender: Any) {
+        picker.allowsEditing = false
+        picker.sourceType = .photoLibrary
+        picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+        if let selectedimage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        {
+            imageView?.image = selectedimage
+            imageView?.contentMode = .scaleAspectFit
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

@@ -10,7 +10,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    var gc_description : String? = String();
+    var gc_description : String? = String()
+    var cache : GeoCache? = nil
 
     @IBOutlet weak var textView: UITextView!
     
@@ -19,6 +20,9 @@ class DetailViewController: UIViewController {
         gc_description! = "";
         // Do any additional setup after loading the view.
         textView.text = gc_description!;
+        if (cache != nil) {
+            cache!.image = imageView?.image
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,4 +40,7 @@ class DetailViewController: UIViewController {
     }
     */
 
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
 }

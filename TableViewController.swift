@@ -17,6 +17,13 @@ class TableViewController: UITableViewController {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+        for i in 0...cacheArray.count {
+            var cache = cacheArray[i]
+            pullImageFromServer(id: cache.id, number: 0) {
+                image in
+                cache.image = image
+            }
+        }
     }
     
     override func viewDidLoad() {
