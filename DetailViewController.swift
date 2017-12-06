@@ -17,7 +17,7 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        textView.text = gc_description!
+        textView.text = gc_description!;
     }
     
     override func didReceiveMemoryWarning() {
