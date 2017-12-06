@@ -8,16 +8,14 @@
 
 import UIKit
 
-class NewCacheViewController: UIViewController, UIImagePickerControllerDelegate {
+class NewCacheViewController: UIViewController {
     
     var dict = [String: String]()
     var cache : GeoCache? = nil
-    var picker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        picker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,35 +43,31 @@ class NewCacheViewController: UIViewController, UIImagePickerControllerDelegate 
     }
     
     @IBAction override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("prepare was reached")
         var dict = [String: String]()
-        dict["title"] = titleField.text!
-        dict["details"] = detailsField.text!
-        dict["creator"] = creatorField.text!
-        dict["reward"] = rewardField.text!
-        cache = GeoCache(fromDictionary: dict)
-        cache!.image = imageView?.image
-    }
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
-    @IBAction func cameraButton(_ sender: Any) {
-        picker.allowsEditing = false
-        picker.sourceType = .photoLibrary
-        picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-        present(picker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
-        if let selectedimage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        {
-            imageView?.image = selectedimage
-            imageView?.contentMode = .scaleAspectFit
+        if let value : String = titleField.text, !value.isEmpty {
+            dict["title"] = titleField.text!
         }
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        
+        if let value : String = detailsField.text, !value.isEmpty {
+        dict["details"] = detailsField.text!
+        }
+        
+        if let value : String = creatorField.text, !value.isEmpty {
+            dict["creator"] = creatorField.text!
+        }
+        
+        if let value : String = rewardField.text, !value.isEmpty {
+            dict["reward"] = rewardField.text!
+        }
+        
+        if let tempcache : GeoCache = GeoCache(fromDictionary: dict) {
+            cache = tempcache
+        } else {
+            print("could not create cache")
+        }
+        
+        print(dict)
     }
 }
 

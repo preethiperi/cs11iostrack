@@ -12,23 +12,9 @@ class TableViewController: UITableViewController {
 
     var cacheArray = [GeoCache]()
     
-    func closure (_ gcArray: [GeoCache]) {
-        cacheArray = gcArray
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-        for i in 0...cacheArray.count {
-            var cache = cacheArray[i]
-            pullImageFromServer(id: cache.id, number: 0) {
-                image in
-                cache.image = image
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadCachesFromServer(onComplete: closure)
+        cacheArray = loadCachesFromDefaults()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -68,15 +54,22 @@ class TableViewController: UITableViewController {
     }
     
     @IBAction func unwindToTable(sender: UIStoryboardSegue) {
-        if ((sender.source as? NewCacheViewController) != nil) {
-            var controller : NewCacheViewController = sender.source as! NewCacheViewController
+        if let controller = sender.source as? NewCacheViewController {
+            // print("Reached unwind")
+            // let controller : NewCacheViewController = (sender.source as? NewCacheViewController)!
             if (controller.cache != nil) {
                 cacheArray.append(controller.cache!)
-                let ip = IndexPath(row: cacheArray.count, section: 0)
-                tableView.insertRows(at: [ip], with: UITableViewRowAnimation.fade)
-                // saveCachesToDefaults(cacheArray)
-                sendCacheToServer(controller.cache!)
+                let ip = [IndexPath(row: cacheArray.count - 1, section: 0)]
+                saveCachesToDefaults(cacheArray)
+                //tableView.reloadData()
+                tableView.insertRows(at: ip, with: UITableViewRowAnimation.fade)
+                print("Saved cache")
+                print(cacheArray)
+            } else {
+                print("cache is nil")
             }
+        } else {
+            return
         }
     }
     
@@ -128,10 +121,10 @@ class TableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if (segue.identifier == "ToDetail") {
             let row = (sender as? IndexPath)?.row
-            var dest : DetailViewController = segue.destination as! DetailViewController
-            if ((dest as? DetailViewController) != nil) {
-                let array_row = row as? Int
-                dest.gc_description = cacheArray[array_row!].description
+            let dest : DetailViewController? = segue.destination as? DetailViewController
+            if (dest != nil) {
+                let array_row = row!
+                dest!.gc_description = cacheArray[array_row].description
             }
         }
     }
